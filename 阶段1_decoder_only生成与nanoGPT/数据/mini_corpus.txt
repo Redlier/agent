@@ -1,0 +1,22 @@
+In a small language model, every next symbol is a prediction.
+The model reads a short context and assigns a score to every possible next character.
+Training compares those scores with the character that actually comes next.
+Generation chooses one character, appends it to the context, and repeats the loop.
+
+The decoder can read the past, but it must not read the future.
+A causal mask makes this rule visible in the attention matrix.
+The same rule is used during training and during generation.
+Training can process many known positions at once; generation waits for each new token.
+
+A tokenizer turns text into IDs, and an embedding turns IDs into vectors.
+The vectors pass through attention, a small feed-forward network, and a final vocabulary head.
+Logits are scores rather than text, so a sampling rule is needed at inference time.
+Greedy decoding is simple, while temperature and nucleus sampling change the variety of choices.
+
+The cache stores keys and values from earlier positions.
+It does not remove the autoregressive dependency, but it avoids recomputing unchanged history.
+Good experiments record the prompt, the seed, the model size, the loss, and the stopping rule.
+Small experiments explain mechanisms; they do not prove broad language ability.
+
+In this study project, a clean data flow is more important than a large model.
+We inspect shapes, compare two implementations, and keep the limits of each experiment visible.
